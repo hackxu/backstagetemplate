@@ -13,7 +13,72 @@ import HomePage from '../pages/homeLayout'
 // import ApplyListPage from '../pages/ApplyList'
 
 var browserHistory = createHistory();
-
+const navArr = [
+    {
+        routepath: "/czx/TibetArea",
+        icon: "",
+        pathname: "西藏区域",
+        key: "TibetArea",
+        component: "TibetAreaPage",
+        hideInMenu: false
+    },
+    {
+        routepath: "/czx/TibetArea/Add",
+        icon: "",
+        pathname: "西藏区域",
+        key: "TibetArea",
+        component: "TibetAreaPageAdd",
+        hideInMenu: true
+    },
+    {
+        routepath: "/czx/Attractions",
+        icon: "",
+        pathname: "景点",
+        key: "Attractions",
+        component: "AttractionsPage",
+        hideInMenu: false
+    },
+    {
+        routepath: "/czx/Attractions/Add",
+        icon: "",
+        pathname: "景点",
+        key: "Attractions",
+        component: "AttractionsPageAdd",
+        hideInMenu: true
+    },
+    {
+        routepath: "/czx/AttractionsDistance",
+        icon: "",
+        pathname: "景点距离",
+        key: "AttractionsDistance",
+        component: "AttractionsDistancePage",
+        hideInMenu: false
+    },
+    {
+        routepath: "/czx/AttractionsDistance/Add",
+        icon: "",
+        pathname: "景点距离",
+        key: "AttractionsDistance",
+        component: "AttractionsDistancePageAdd",
+        hideInMenu: true
+    },
+    {
+        routepath: "/czx/TimeArea",
+        icon: "",
+        pathname: "区域耗时",
+        key: "TimeArea",
+        component: "TimeAreaPage",
+        hideInMenu: false
+    },
+    {
+        routepath: "/czx/TimeArea/Add",
+        icon: "",
+        pathname: "区域耗时",
+        key: "TimeArea",
+        component: "TimeAreaPageAdd",
+        hideInMenu: true
+    }
+]
 
 class Routerdiv extends Component {
 
@@ -38,8 +103,11 @@ const HomePageRouter = ({match, history}) => (
         <Switch>
             <PrivateRoute exact path={match.url}
                           component={() => <Redirect to="/czx/School/SchoolList"/>}></PrivateRoute>
-
+            {store.RouterList.map((route, i) => {
+                return <RouteWithSubRoutes  {...route} />
+            })}
             <PrivateRoute component={NoMatch}></PrivateRoute>
+
         </Switch>
     </HomePage>
 
@@ -64,6 +132,16 @@ const PrivateRoute = ({component: Component, ...rest}) => (
         )
     }}/>
 )
+
+const RouteWithSubRoutes = route => (
+    <Route
+        path={route.routepath}
+        render={props => (
+            // pass the sub-routes down to keep nesting
+            <route.component {...props}  />
+        )}
+    />
+);
 // const CheckLoginRoute = ({component: Component, ...rest}) => (
 //     <Route {...rest} render={props => {
 //         return store.isLogin ? (

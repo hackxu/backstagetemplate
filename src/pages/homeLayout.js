@@ -1,7 +1,7 @@
 import React from 'react'   ;
 import {Layout, Menu, Icon, Badge} from 'antd';
 import {observer} from 'mobx-react';
-import {observable} from 'mobx';
+import {observable, toJS} from 'mobx';
 import {Link, withRouter} from 'react-router-dom';
 import store from '../store/index'
 
@@ -91,11 +91,12 @@ class CustomSiderMenu extends React.Component {
         let that = this;
         store.RouterChildList.map((item, index) => {
             return item.map((citem, cindex) => {
-                console.log(citem.key)
+                // console.log(citem.key)
+                // console.log(this.props.history.location.pathname.split('/')[2])
                 // console.log(this.KeyPath)
-                if (citem.key === this.props.history.location.pathname.split('/')[3]) {
+                if (citem.key === this.props.history.location.pathname.split('/')[2]) {
                     that.openKeys = [index.toString()]
-                    console.log(that.openKeys)
+                    // console.log(that.openKeys)
                 }
             })
         })
@@ -116,9 +117,9 @@ class CustomSiderMenu extends React.Component {
 
     render() {
         // console.log(NavList)\
-        console.log("ri")
-        let KeyPath = this.props.history.location.pathname.split('/')[3];
-        console.log(this.props.history.location.pathname)
+        // console.log("ri")
+        let KeyPath = this.props.history.location.pathname.split('/')[2];
+        // console.log(this.props.history.location.pathname)
 
         return (
 
@@ -136,15 +137,11 @@ class CustomSiderMenu extends React.Component {
 
                             {
                                 item.children.map((citem, cindex) => {
-                                        let badge = "";
-                                        if (citem.pathname === "申请列表") {
-                                            // badge = <Badge count={6}></Badge>
+                                        if (!citem.hideInMenu) {
+                                            return <Menu.Item key={citem.key}><Link
+                                                to={citem.routepath}>{citem.pathname}</Link></Menu.Item>
                                         }
-                                        if (citem.pathname === "待审核文章列表") {
-                                            // badge = <Badge count={60}></Badge>
-                                        }
-                                        return <Menu.Item key={citem.key}><Link
-                                            to={citem.routepath}>{citem.pathname} {badge}</Link></Menu.Item>
+                                        return false
                                     }
                                 )
                             }

@@ -3,6 +3,8 @@ import {Form, Icon, Input, Button, message} from 'antd';
 // import { BrowserHistory } from 'history';
 import service from '../http/http';
 import store from '../store/index'
+import {toJS} from "mobx";
+
 
 const FormItem = Form.Item;
 
@@ -13,11 +15,11 @@ class NormalLoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 // values.Password = md5(values.Password)
-                // console.log(that.props)
-                // store.login()
-                // that.props.history.push("/")
-                //
-                // return
+                console.log(that.props)
+                store.login()
+                that.props.history.push("/")
+
+                return false
                 service.get('/tAdminUser/getAdminUser', {params: values})
                     .then(function (response) {
                         console.log(response);
